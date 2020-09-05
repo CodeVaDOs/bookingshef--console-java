@@ -40,10 +40,10 @@ public class Main {
                 case 3: {
                     System.out.print("\nВведите имя: ");
                     String name = scanner.next();
-                    System.out.print("\nВведите фамилию: ");
+                    System.out.print("Введите фамилию: ");
                     String surname = scanner.next();
 
-                    System.out.print("\nВведите ID рейса: ");
+                    System.out.print("Введите ID рейса: ");
                     Long id = scanner.nextLong();
 
                     System.out.println(
@@ -52,8 +52,6 @@ public class Main {
                                     .map(Booking::toString)
                                     .orElse("Ошибка бронирования рейса.")
                     );
-
-
                 }
                 break;
                 case 4: {
@@ -66,7 +64,7 @@ public class Main {
                 case 5: {
                     System.out.print("\nВведите имя: ");
                     String name = scanner.next();
-                    System.out.print("\nВведите фамилию: ");
+                    System.out.print("Введите фамилию: ");
                     String surname = scanner.next();
 
                     bControler.findFlightByCredit(name, surname).stream()
@@ -108,5 +106,4 @@ public class Main {
         System.out.println("6. Генерация данных");
         System.out.println("0. Выход");
     }
-
 }
