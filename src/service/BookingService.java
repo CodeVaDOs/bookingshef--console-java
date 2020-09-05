@@ -8,7 +8,6 @@ import entity.Flight;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BookingService {
     private AbstractDao<Booking> dao = new BookingDao();
@@ -20,7 +19,9 @@ public class BookingService {
         } else {
             return Optional.empty();
         }
-    };
+    }
+
+    ;
 
     public boolean cancelReserve(long id) {
         return dao.getAll().stream().filter(i -> i.getId() == id).findFirst()
@@ -41,7 +42,10 @@ public class BookingService {
     public List<Booking> findFlightByCredit(String name, String surname) {
         return dao.getAll()
                 .stream()
-                .filter(f -> f.getClientName().equalsIgnoreCase(name) && f.getClientSurname().equalsIgnoreCase(surname))
+                .filter(f ->
+                        f.getClientName().equalsIgnoreCase(name) &&
+                                f.getClientSurname().equalsIgnoreCase(surname)
+                )
                 .collect(Collectors.toList());
 
     }

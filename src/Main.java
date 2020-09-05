@@ -21,8 +21,7 @@ public class Main {
 
             switch (command) {
                 case 1: {
-                    fControler.getOnlineFlights()
-                            .stream()
+                    fControler.getOnlineFlights().stream()
                             .forEach(i -> {
                                 System.out.println(i);
                             });
@@ -76,11 +75,17 @@ public class Main {
                     System.out.print("Введите количество рейсов: ");
                     int count = getScannerInt(scanner, "Введите количество рейсов: ");
 
-                    List<Destinations> destinationsList = new ArrayList<>(Arrays.asList(Destinations.values()));
+                    List<Destinations> destinationsList = new ArrayList<>(
+                            Arrays.asList(Destinations.values())
+                    );
 
                     for (int i = 0; i < count; i++) {
                         Collections.shuffle(destinationsList);
-                        Flight newFlight = new Flight(Instant.now().plusMillis(1000 * 60 * 60 * (rand.nextInt(524) + 1)), destinationsList.get(0), rand.nextInt(100));
+                        Flight newFlight = new Flight(
+                                Instant.now().plusMillis(1000 * 60 * 60 * (rand.nextInt(524) + 1)),
+                                destinationsList.get(0),
+                                rand.nextInt(100)
+                        );
                         fControler.save(newFlight);
                         System.out.println(newFlight);
                     }
@@ -89,6 +94,7 @@ public class Main {
                 case 0:
                     fControler.saveDataToFile();
                     bControler.saveDataToFile();
+                    scanner.close();
                     break;
                 default:
                     System.out.println("Ошибка действия!");
