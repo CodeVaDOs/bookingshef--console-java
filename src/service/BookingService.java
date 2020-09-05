@@ -45,4 +45,8 @@ public class BookingService {
                 .collect(Collectors.toList());
 
     }
+
+    public List<Booking> getAll() {
+        return this.dao.getAll();
+    }
 }
