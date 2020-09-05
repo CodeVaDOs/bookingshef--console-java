@@ -21,12 +21,20 @@ public class FlightService {
         dao.saveDataToFile();
     }
 
+    public List<Flight> getFutureFlight() {
+        return dao.getAll().stream()
+                .filter(i ->
+                        Duration.between(Instant.now(), i.getDateTime()).toMillis() >= 0
+                )
+                .collect(Collectors.toList());
+    }
+
     public List<Flight> getOnlineFlights() {
         return dao.getAll().stream()
                 .filter(i ->
-                        Duration.between(Instant.now(), i.getDateTime())
-                                .toMillis() <= 86400000 && Duration.between(Instant.now(),
-                                i.getDateTime()).toMillis() >= 0
+                        Duration.between(Instant.now(),
+                                i.getDateTime()).toMillis() <= 86400000
+                                && Duration.between(Instant.now(), i.getDateTime()).toMillis() >= 0
                 )
                 .collect(Collectors.toList());
     }

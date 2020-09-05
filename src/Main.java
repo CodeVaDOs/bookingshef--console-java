@@ -41,16 +41,36 @@ public class Main {
                     String name = scanner.next();
                     System.out.print("Введите фамилию: ");
                     String surname = scanner.next();
+                    boolean destIsTrue = false;
 
-                    System.out.print("Введите ID рейса: ");
-                    Long id = getScannerLong(scanner, "Введите ID рейса: ");
+                    while(destIsTrue == false) {
+                        try {
+                            System.out.print("Введите место назначения: ");
+                            String destStr = scanner.next();
 
-                    System.out.println(
-                            fControler.getFlightInfo(id)
-                                    .flatMap(f -> bControler.reserve(name, surname, f))
-                                    .map(Booking::toString)
-                                    .orElse("Ошибка бронирования рейса.")
-                    );
+                            Destinations destination = Destinations.valueOf(destStr.toUpperCase());
+
+                            fControler.getFutureFlights()
+                                    .stream()
+                                    .filter(f -> f.getDestination().equals(destination))
+                                    .forEach(f -> System.out.println(f));
+
+                            System.out.print("\nВведите ID рейса: ");
+                            Long id = getScannerLong(scanner, "Введите ID рейса: ");
+
+                            System.out.println(
+                                    fControler.getFlightInfo(id)
+                                            .flatMap(f -> bControler.reserve(name, surname, f))
+                                            .map(Booking::toString)
+                                            .orElse("Ошибка бронирования рейса.")
+                            );
+
+                            destIsTrue = true;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Доступных рейсов нет.");
+                            destIsTrue = false;
+                        }
+                    }
                 }
                 break;
                 case 4: {
@@ -123,7 +143,7 @@ public class Main {
     }
 
     public static long getScannerLong(Scanner scanner, String errorMessage) {
-        while (!scanner.hasNextInt()) {
+        while (!scanner.hasNextLong()) {
             System.out.println("Ошибка действия!");
             scanner.next();
             System.out.print("\n" + errorMessage);

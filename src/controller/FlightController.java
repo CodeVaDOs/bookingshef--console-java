@@ -21,6 +21,9 @@ public class FlightController {
         return service.getFlightInfo(id);
     }
 
+    public List<Flight> getFutureFlights() {
+        return service.getFutureFlight();
+    }
 
     public List<Flight> getOnlineFlights() {
         return service.getOnlineFlights();
