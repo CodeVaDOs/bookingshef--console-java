@@ -17,7 +17,7 @@ public class Main {
         do {
             printMenu();
             System.out.print("\nВведите код действия: ");
-            command = scanner.nextInt();
+            command = getScannerInt(scanner, "Введите код действия: ");
 
             switch (command) {
                 case 1: {
@@ -30,7 +30,7 @@ public class Main {
                 break;
                 case 2: {
                     System.out.print("\nВведите ID рейса: ");
-                    long id = scanner.nextLong();
+                    long id = getScannerLong(scanner, "Введите ID рейса: ");
                     Optional<String> s = fControler.getFlightInfo(id)
                             .map(Flight::toString);
 
@@ -44,7 +44,7 @@ public class Main {
                     String surname = scanner.next();
 
                     System.out.print("Введите ID рейса: ");
-                    Long id = scanner.nextLong();
+                    Long id = getScannerLong(scanner, "Введите ID рейса: ");
 
                     System.out.println(
                             fControler.getFlightInfo(id)
@@ -56,7 +56,7 @@ public class Main {
                 break;
                 case 4: {
                     System.out.print("\nВведите ID брони: ");
-                    long id = scanner.nextLong();
+                    long id = getScannerLong(scanner, "Введите ID брони: ");
                     boolean b = bControler.cancelReserve(id);
                     System.out.println(b ? "Успешное удаление!" : "Ошибка удаления!");
                 }
@@ -74,7 +74,7 @@ public class Main {
                 case 6: {
                     Random rand = new Random();
                     System.out.print("Введите количество рейсов: ");
-                    int count = scanner.nextInt();
+                    int count = getScannerInt(scanner, "Введите количество рейсов: ");
 
                     List<Destinations> destinationsList = new ArrayList<>(Arrays.asList(Destinations.values()));
 
@@ -105,5 +105,23 @@ public class Main {
         System.out.println("5. Мои рейсы");
         System.out.println("6. Генерация данных");
         System.out.println("0. Выход");
+    }
+
+    public static int getScannerInt(Scanner scanner, String errorMessage) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Ошибка действия!");
+            scanner.next();
+            System.out.print("\n" + errorMessage);
+        }
+        return scanner.nextInt();
+    }
+
+    public static long getScannerLong(Scanner scanner, String errorMessage) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Ошибка действия!");
+            scanner.next();
+            System.out.print("\n" + errorMessage);
+        }
+        return scanner.nextLong();
     }
 }
